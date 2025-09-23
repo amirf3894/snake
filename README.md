@@ -1,9 +1,46 @@
-Welcome to snake_cli
+# snake_cli
 
-this is a multiplayer snake game which runs on terminal
-you can compile it on Unix_based and windows
-first you must create a host and then connect to it to play the game
-you can set playground size for example (20 char * 120 char)
-you can resize your terminal window while you are playing
+A multiplayer Snake game you can play in the terminal, over a local network. Built in Rust, runs on Unix-based systems and Windows.
 
-If you want to play it on a local network, make sure the devices can reach each other and are connected to the same network. Also, make sure your firewall isn't affecting the connection.
+---
+
+## Features
+
+- Play Snake with friends: A host, Several clients.  
+- Adjustable playground size (for example `20 × 120`).  
+- You can resize your terminal window during gameplay.  
+- Works over local networks — LAN play.  
+- Cross-platform: Unix-based systems and Windows.
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Rust and Cargo installed.  
+- Network setup: all players must be on the same local network, and firewall settings must allow connections.  
+
+### Installation
+
+```bash
+git clone https://github.com/amir-frjn/snake_cli.git
+cd snake_cli
+cargo build --release
+```
+---
+
+## Usage
+
+- Create a host
+  ```bash
+  snake_cli server --port <port>
+  ```
+  Or
+  ```bash
+  snake_cli server --port 1234 --width 120 --height 20
+  ```
+- Joining a game
+  ```bash
+  snake_cli client --host <host-ip-or-name> --port <port>
+  ```

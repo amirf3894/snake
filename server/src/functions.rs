@@ -55,7 +55,7 @@ pub async fn loose(
     mut socket: TcpStream,
     mut playground_changes: PlaygroundChanges,
     tx: Sender<PlaygroundChanges>,
-    err: Result<(), Box<dyn (std::error::Error)>>,
+    err: Result<(), Box<dyn std::error::Error>>,
 ) {
     // host_side_data.status = GameStatus::Dead("YOU LOOSE".to_string());
     playground_changes.remove_char.append(&mut snake.pieces);
@@ -119,7 +119,7 @@ pub fn snake_status_check(
     playground: Arc<RwLock<Box<[Box<[char]>]>>>,
     snake: &mut SnakeBody,
     playground_changes: &mut PlaygroundChanges,
-) -> Result<(), Box<dyn (std::error::Error)>> {
+) -> Result<(), Box<dyn std::error::Error>> {
     let head = playground_changes.change_to_x.get(0).unwrap();
     let character = playground.read().unwrap()[head.0 as usize][head.1 as usize];
     if character == '#' || character == 'O' || character == 'X' {
@@ -152,7 +152,7 @@ pub fn user_display_generator(
     snake_head: &(u16, u16),
     conversion_vector: &mut (u16, u16),
     terminal_size: &(u16, u16),
-) -> Result<String, Box<dyn (std::error::Error)>> {
+) -> Result<String, Box<dyn std::error::Error>> {
     let cloned_playground = playground.read().unwrap();
     let playground_size = (cloned_playground.len(), cloned_playground[0].len());
 
@@ -184,12 +184,12 @@ pub fn user_display_generator(
     if terminal_size.0 + conversion_vector.0 > playground_size.0 as u16
         || snake_head.0 + gap.0 > playground_size.0 as u16
     {
-        conversion_vector.0 = (playground_size.0 as u16) - terminal_size.0;
+        conversion_vector.0 = (playground_size.0 as u16).saturating_div(terminal_size.0);
     }
     if terminal_size.1 + conversion_vector.1 > playground_size.1 as u16
         || snake_head.1 + gap.1 > playground_size.1 as u16
     {
-        conversion_vector.1 = (playground_size.1 as u16) - terminal_size.1;
+        conversion_vector.1 = (playground_size.1 as u16).saturating_div(terminal_size.1);
     }
 
     let mut data = String::new();
@@ -208,6 +208,7 @@ pub fn user_display_generator(
 
     y_range.clone().for_each(|y| {
         x_range.clone().for_each(|x| {
+            //println!("{:?}", conversion_vector);
             let item = cloned_playground[(x + conversion_vector.0) as usize]
                 [(y + conversion_vector.1) as usize];
 

@@ -22,7 +22,7 @@ playground is Arc<RwLock> so all clients can read and update_playground write ch
 pub async fn main_host(
     playground_size: (u16, u16),
     port: u16,
-) -> Result<(), Box<dyn (std::error::Error)>> {
+) -> Result<(), Box<dyn std::error::Error>> {
     let (tx, rx) = channel::<PlaygroundChanges>(300);
     let playground = Arc::new(RwLock::new(
         vec![vec![' '; playground_size.1 as usize].into_boxed_slice(); playground_size.0 as usize]
@@ -102,7 +102,7 @@ pub async fn client_task(
     socket: &mut TcpStream,
     playground: Arc<RwLock<Box<[Box<[char]>]>>>,
     playground_size: &(u16, u16),
-) -> Result<(), Box<dyn (std::error::Error)>> {
+) -> Result<(), Box<dyn std::error::Error>> {
     let mut buf;
     println!("a user entered");
     let mut conversion_vector = (0, 0);

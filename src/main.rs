@@ -61,7 +61,7 @@ async fn main() {
     }
 }
 
-async fn host(arg: &ArgMatches) -> Result<(), Box<dyn (std::error::Error)>> {
+async fn host(arg: &ArgMatches) -> Result<(), Box<dyn std::error::Error>> {
     let port = arg.get_one::<String>("port").unwrap();
     let width = arg.get_one::<String>("width").unwrap();
     let height = arg.get_one::<String>("height").unwrap();
@@ -73,7 +73,7 @@ async fn host(arg: &ArgMatches) -> Result<(), Box<dyn (std::error::Error)>> {
     Ok(())
 }
 
-async fn client(arg: &ArgMatches) -> Result<(), Box<dyn (std::error::Error)>> {
+async fn client(arg: &ArgMatches) -> Result<(), Box<dyn std::error::Error>> {
     let addr = arg.get_one::<String>("ip").unwrap();
     let err = main_client(addr).await;
 
