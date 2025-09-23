@@ -44,3 +44,10 @@ cargo build --release
   ```bash
   snake_cli client --host <host-ip-or-name> --port <port>
   ```
+
+---
+
+## Demo
+
+![Gameplay demo](assets/gameplay.gif)
+
